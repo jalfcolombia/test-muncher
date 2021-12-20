@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id              String                @id @default(uuid())
+  reference       String                @unique
+  name            String
+  price           Float                 @default(0)
+  initialQuantity Int                   @default(0)
+  stock           Int                   @default(0)
+  purchaseOrders  PurchaseOrderDetail[]
+}
+
+model User {
+  id             String          @id @default(uuid())
+  name           String
+  email          String          @unique
+  money          Float           @default(0)
+  purchaseOrders PurchaseOrder[]
+  transFrom      Transaction[]
+  transTo        Transaction[]   @relation("Transaction_userIdToToUser")
+}
+
+model Transaction {
+  id              String   @id @default(uuid())
+  userIdForm      String
+  userIdTo        String
+  quantity        Float    @default(0)
+  hashTransaction String
+  createdAt       DateTime @default(now())
+  usersFrom       User     @relation(fields: [userIdForm], references: [id])
+  usersTo         User     @relation("Transaction_userIdToToUser", fields: [userIdTo], references: [id])
+}
+
+model PurchaseOrder {
+  id                  String                @id @default(uuid())
+  userId              String
+  paid                Boolean               @default(false)
+  hashTransaction     String?
+  transactionAt       DateTime?
+  createdAt           DateTime              @default(now())
+  users               User                  @relation(fields: [userId], references: [id])
+  PurchaseOrderDetail PurchaseOrderDetail[]
+}
+
+model PurchaseOrderDetail {
+  id              String        @id @default(uuid())
+  prurchaseOrder  String
+  productId       String
+  quantity        Int           @default(0)
+  hashTransaction String?
+  transactionAt   DateTime?
+  createdAt       DateTime      @default(now())
+  products        Product       @relation(fields: [productId], references: [id])
+  PurchaseOrder   PurchaseOrder @relation(fields: [prurchaseOrder], references: [id])
+}

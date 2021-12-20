@@ -1,0 +1,934 @@
+{
+	"info": {
+		"_postman_id": "e80c93f4-0255-4cc3-a7e4-5a90bfe44f09",
+		"name": "Muncher",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create Product 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Create Product 1', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.variables.set('productID1', responseJson.productID);",
+									"    pm.expect(responseJson.message).to.eql(\"El producto fue agregado correctamente\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productName\", \"Producto 1\");",
+									"pm.variables.set(\"productReference\", \"A0001\");",
+									"pm.variables.set(\"productPrice\", \"5\");",
+									"pm.variables.set(\"productQuantity\", \"350\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "{{productName}}",
+									"type": "text"
+								},
+								{
+									"key": "reference",
+									"value": "{{productReference}}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "{{productPrice}}",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "{{productQuantity}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Repeat Product 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Repeat Product', function () {",
+									"    pm.response.to.have.status(400);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El producto que intenta agregar ya existe\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productName\", \"Producto 1\");",
+									"pm.variables.set(\"productReference\", \"A0001\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "{{productName}}",
+									"type": "text"
+								},
+								{
+									"key": "reference",
+									"value": "{{productReference}}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "{{productPrice}}",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "{{productQuantity}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Create Product1', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.variables.set('productID2', responseJson.productID);",
+									"    pm.expect(responseJson.message).to.eql(\"El producto fue agregado correctamente\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productName\", \"Producto 2\");",
+									"pm.variables.set(\"productReference\", \"B0002\");",
+									"pm.variables.set(\"productPrice\", \"7\");",
+									"pm.variables.set(\"productQuantity\", \"120\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "{{productName}}",
+									"type": "text"
+								},
+								{
+									"key": "reference",
+									"value": "{{productReference}}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "{{productPrice}}",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "{{productQuantity}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate New Product Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Validate New Product Data', function () {",
+									"    pm.response.to.have.status(400);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.errors).to.eql({\"name\":\"El campo es requerido\",\"reference\":\"El campo es requerido\",\"price\":\"El precio debe ser mayor que 0.1\",\"quantity\":\"El dato no es un número valido\"});",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productName\", \"\");",
+									"pm.variables.set(\"productReference\", \"\");",
+									"pm.variables.set(\"productPrice\", \"-1\");",
+									"pm.variables.set(\"productQuantity\", \"hqweh\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "{{productName}}",
+									"type": "text"
+								},
+								{
+									"key": "reference",
+									"value": "{{productReference}}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "{{productPrice}}",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "{{productQuantity}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Create User 1', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El usuario fue registado correctamente\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.variables.set(\"productName\", \"Producto 1\");",
+									"// pm.variables.set(\"productReference\", \"A0001\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "{{user1Name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{user1Email}}",
+									"type": "text"
+								},
+								{
+									"key": "money",
+									"value": "{{user1Money}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Create User 2', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El usuario fue registado correctamente\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.variables.set(\"productName\", \"Producto 1\");",
+									"// pm.variables.set(\"productReference\", \"A0001\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "{{user2Name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{user2Email}}",
+									"type": "text"
+								},
+								{
+									"key": "money",
+									"value": "{{user2Money}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer Money",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"moneyToTransfer\", \"100\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Transfer Money', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"La transferencia fue realizada exitosamente\");",
+									"});",
+									"",
+									"pm.test('Transfer Money Fail 1', function () {",
+									"    pm.response.to.have.status(400);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El usuario de destino no existe en el sistema\");",
+									"});",
+									"",
+									"",
+									"pm.test('Transfer Money Fail 2', function () {",
+									"    pm.response.to.have.status(400);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El usuario que envía el dinero o no existe o no tiene los fondos suficientes para realizar dicha transferencia\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "from",
+									"value": "{{user1Email}}",
+									"type": "text"
+								},
+								{
+									"key": "to",
+									"value": "{{user2Email}}",
+									"type": "text"
+								},
+								{
+									"key": "money",
+									"value": "{{moneyToTransfer}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/transfer-money",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"transfer-money"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Balance User 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// pm.variables.set(\"user1Email\", \"ingeniero.julianlasso@gmail.com\");",
+									"pm.variables.set(\"user1Money\", \"100\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Add Balance User 1', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El balance del usuario fue actualizado\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "{{user1Email}}",
+									"type": "text"
+								},
+								{
+									"key": "money",
+									"value": "{{user1Money}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/balance/add",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"balance",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valdiate Add Balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Valdiate Add Balance', function () {",
+									"    pm.response.to.have.status(400);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.errors).to.eql({\"email\":\"El correo digitado no es valido\",\"money\":\"La cantidad debe ser mayor que 1\"});",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"user1Email\", \"123123123\");",
+									"pm.variables.set(\"user1Money\", \"-32\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "{{user1Email}}",
+									"type": "text"
+								},
+								{
+									"key": "money",
+									"value": "{{user1Money}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/balance/add",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"balance",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shopping Cart",
+			"item": [
+				{
+					"name": "New Purchase Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('New Purchase Order', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.variables.set(\"purchaseOrderID1\", responseJson.purchaseOrderID);",
+									"    pm.expect(responseJson.message).to.eql(\"La orden de compra fue registada\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"user1Email\", \"ingeniero.julianlasso@gmail.com\");",
+									"// pm.variables.set(\"productName\", \"Producto 1\");",
+									"// pm.variables.set(\"productReference\", \"A0001\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "{{user1Email}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/purchase-order",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"purchase-order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Item 1 to Shopping Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Add Item 1 to Shopping Cart', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El ítem fue agregado a la orden de compra correctamente\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productID\", pm.variables.get(\"productID1\"));",
+									"pm.variables.set(\"purchaseOrderID\", pm.variables.get(\"purchaseOrderID1\"));",
+									"pm.variables.set(\"productQuantity\", \"5\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "purchaseOrderID",
+									"value": "{{purchaseOrderID}}",
+									"type": "text"
+								},
+								{
+									"key": "productID",
+									"value": "{{productID}}",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "{{productQuantity}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/purchase-order",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"purchase-order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Item 2 to Shopping Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Add Item 2 to Shopping Cart', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El ítem fue agregado a la orden de compra correctamente\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productID\", pm.variables.get(\"productID2\"));",
+									"pm.variables.set(\"purchaseOrderID\", pm.variables.get(\"purchaseOrderID1\"));",
+									"pm.variables.set(\"productQuantity\", \"6\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "purchaseOrderID",
+									"value": "{{purchaseOrderID}}",
+									"type": "text"
+								},
+								{
+									"key": "productID",
+									"value": "{{productID}}",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "{{productQuantity}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/purchase-order",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"purchase-order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay Purchase Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Pay Purchase Order', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"La orden de compra fue pagada exitosamente\");",
+									"});",
+									"",
+									"pm.test('Pay Purchase Order Fail', function () {",
+									"    pm.response.to.have.status(500);",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson.message).to.eql(\"El usuario no tiene el dinero suficiente para pagar la orden de compra\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"purchaseOrderID\", pm.variables.get(\"purchaseOrderID1\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/purchase-order/pay/{{purchaseOrderID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"purchase-order",
+								"pay",
+								"{{purchaseOrderID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:3000/dev"
+		},
+		{
+			"key": "productName",
+			"value": "Producto 1"
+		},
+		{
+			"key": "productReference",
+			"value": "A0001"
+		},
+		{
+			"key": "productPrice",
+			"value": "10"
+		},
+		{
+			"key": "productQuantity",
+			"value": "300"
+		},
+		{
+			"key": "user1Name",
+			"value": "Julian Lasso"
+		},
+		{
+			"key": "user1Email",
+			"value": "ingeniero.julianlasso@gmail.com"
+		},
+		{
+			"key": "user1Money",
+			"value": "500"
+		},
+		{
+			"key": "purchaseOrderID",
+			"value": ""
+		},
+		{
+			"key": "productID1",
+			"value": ""
+		},
+		{
+			"key": "productID2",
+			"value": ""
+		},
+		{
+			"key": "productID",
+			"value": ""
+		},
+		{
+			"key": "purchaseOrderID1",
+			"value": ""
+		},
+		{
+			"key": "user2Name",
+			"value": "Andres Figueroa"
+		},
+		{
+			"key": "user2Email",
+			"value": "andresfigueroa@gmail.com"
+		},
+		{
+			"key": "user2Money",
+			"value": "300"
+		},
+		{
+			"key": "moneyToTransfer",
+			"value": "50"
+		}
+	]
+}

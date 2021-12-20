@@ -1,1 +1,2 @@
 # test-muncher
+npm install

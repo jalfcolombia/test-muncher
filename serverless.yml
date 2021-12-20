@@ -1,0 +1,100 @@
+service: test-muncher-serverless
+
+frameworkVersion: '2'
+
+plugins:
+  - serverless-offline
+  - serverless-middleware
+  - serverless-dotenv-plugin
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    shouldStartNameWithService: true
+  environment:
+    NODE_OPTIONS: --enable-source-maps --stack-trace-limit=1000
+
+functions:
+  # -------------------------------------------------------------
+  productCreate:
+    handler: src/functions/product.create
+    memorySize: 256
+    events:
+      - http:
+          path: /product
+          method: post
+          cors: true
+    custom:
+      middleware:
+        pre:
+          - src/middlewares/product.validateCreate
+  # -------------------------------------------------------------
+  userCreate:
+    handler: src/functions/user-create.create
+    memorySize: 256
+    events:
+      - http:
+          path: /user
+          method: post
+          cors: true
+    custom:
+      middleware:
+        pre:
+          - src/middlewares/user.validateCreate
+  # -------------------------------------------------------------
+  userAddBalance:
+    handler: src/functions/user-balance.add
+    memorySize: 256
+    events:
+      - http:
+          path: /balance/add
+          method: put
+          cors: true
+    custom:
+      middleware:
+        pre:
+          - src/middlewares/user.validateAddBalance
+  # -------------------------------------------------------------
+  purchaseOrderCreate:
+    handler: src/functions/purchase-order.create
+    memorySize: 256
+    events:
+      - http:
+          path: /purchase-order
+          method: post
+          cors: true
+  # -------------------------------------------------------------
+  purchaseOrderAddItem:
+    handler: src/functions/purchase-order.addItem
+    memorySize: 256
+    events:
+      - http:
+          path: /purchase-order
+          method: put
+          cors: true
+  # -------------------------------------------------------------
+  payPurchaseOrder:
+    handler: src/functions/purchase-order.pay
+    memorySize: 256
+    events:
+      - http:
+          path: /purchase-order/pay/{purchaseOrderID}
+          method: put
+          cors: true
+          request:
+            parameters:
+              paths:
+                purchaseOrderID: true
+  # -------------------------------------------------------------
+  transferMoney:
+    handler: src/functions/money.transfer
+    memorySize: 256
+    events:
+      - http:
+          path: /transfer-money
+          method: post
+          cors: true
